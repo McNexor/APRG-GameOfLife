@@ -76,3 +76,8 @@ If the `--measure` flag is used, timing information is displayed:
 
 - Create a test input file as described above.
 - Run the program and compare the results against expected outcomes.
+
+### OR
+
+- Use one of the files in inputFiles
+- Compare the result with the corresponding reference Files in referenceFiles
