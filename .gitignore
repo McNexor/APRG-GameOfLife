@@ -33,3 +33,8 @@
 
 # IDE specific
 .vscode
+*.pdb
+*.ilk
+
+# Output files
+outputFiles

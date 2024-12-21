@@ -12,7 +12,7 @@ std::vector<std::vector<char>> readBoardInputFile(const std::string filename) {
     std::string line;
 
     std::getline(inputFile, line);
-    sscanf(line.c_str(), "%d,%d", rows, columns);
+    sscanf(line.c_str(), "%d,%d", &rows, &columns);
 
     std::vector<std::vector<char>> board = std::vector<std::vector<char>>(rows, std::vector<char>(columns, DEAD));
 
@@ -58,20 +58,17 @@ int countAliveNeighbors(const Board &board, const size_t row, const size_t colum
             ++count;
         }
     }
+
     return count;
 
-    return 0;
 }
 
 void updateCell(Board &board, const int aliveCount, const size_t row, const size_t column) {
         
-    if (board.board[row][column] == ALIVE && (aliveCount == 2 || aliveCount == 3)) 
+    if (aliveCount == 3 || (board.board[row][column] == ALIVE && aliveCount == 2)) 
         board.board[row][column] = ALIVE;
     else {
-        if (board.board[row][column] == DEAD && aliveCount == 3) 
-            board.board[row][column] = ALIVE;
-        else 
-            board.board[row][column] = DEAD;
+        board.board[row][column] = DEAD;
     }
 
 }
@@ -79,6 +76,8 @@ void updateCell(Board &board, const int aliveCount, const size_t row, const size
 void calculateNextBoard(const Board &previousBoard, Board &nextBoard) {
     size_t rows = previousBoard.board.size();
     size_t columns = previousBoard.board[0].size();
+
+    //nextBoard.board = std::vector<std::vector<char>>(rows, std::vector<char>(columns, DEAD));
 
     for (size_t row = 0; row < rows; ++row) {
         for (size_t col = 0; col < columns; ++col) {
