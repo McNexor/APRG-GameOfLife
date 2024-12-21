@@ -11,7 +11,7 @@ int main() {
 
     Board previousBoard(inputBoard);
 
-    Board nextBoard;
+    Board nextBoard(inputBoard);
 
     for (int i = 0; i < generations; ++i) {
         calculateNextBoard(previousBoard, nextBoard);
