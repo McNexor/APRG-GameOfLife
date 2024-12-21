@@ -1,29 +1,38 @@
 #include "gameoflife.h"
 
-struct Board {
-    std::vector<std::vector<char>> board;
-
-    Board() {
-        board = std::vector<std::vector<char>>();
-    }
-
-    Board(std::vector<std::vector<char>> board) : board{board} {}
-};
+Board::Board() {
+    board = std::vector<std::vector<char>>();
+}
 
 std::vector<std::vector<char>> readBoardInputFile(std::string filename) {
 
-    // Read input file
+    int rows = 0;
+    int columns = 0;
+    std::ifstream inputFile(filename);
+    std::string line;
 
-    return std::vector<std::vector<char>>();
+    std::getline(inputFile, line);
+    sscanf(line.c_str(), "%d,%d", rows, columns);
+
+    std::vector<std::vector<char>> board = std::vector<std::vector<char>>(rows, std::vector<char>(columns, '.'));
+
+    for (int i = 0; i < rows; ++i) {
+        std::getline(inputFile, line);
+        for (int j = 0; j < columns; ++j) {
+            board[i][j] = line[j];
+        }
+    }
+
+    return board;
 }
 
-void writeBoardOutputFile(Board &board, std::string filename) {
+void writeBoardOutputFile(const Board &board, std::string filename) {
 
     // Write board state to file
 
 }
 
-int countAliveNeighbors(Board &board, size_t row, size_t column) {
+int countAliveNeighbors(const Board &board, size_t row, size_t column) {
 
     // Count the number of neighboring, alive cells
 
@@ -37,7 +46,7 @@ void updateCell(Board &board, size_t row, size_t column) {
 
 }
 
-void calculateNextBoard(Board &previousBoard, Board &nextBoard) {
+void calculateNextBoard(const Board &previousBoard, Board &nextBoard) {
     size_t rows = previousBoard.board.size();
     size_t columns = previousBoard.board[0].size();
 

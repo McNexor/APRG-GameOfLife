@@ -1,5 +1,6 @@
 #include<vector>
 #include<string>
+#include <fstream>
 
 struct Board {
     std::vector<std::vector<char>> board;
@@ -11,10 +12,10 @@ struct Board {
 
 std::vector<std::vector<char>> readBoardInputFile(std::string filename);
 
-void writeBoardOutputFile(Board &board, std::string filename);
+void writeBoardOutputFile(const Board &board, std::string filename);
 
-int countAliveNeighbors(Board &board, size_t row, size_t column);
+int countAliveNeighbors(const Board &board, size_t row, size_t column);
 
 void updateCell(Board &board, size_t row, size_t column);
 
-void calculateNextBoard(Board &previousBoard, Board &nextBoard);
+void calculateNextBoard(const Board &previousBoard, Board &nextBoard);
