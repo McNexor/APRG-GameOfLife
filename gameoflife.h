@@ -1,6 +1,7 @@
 #include<vector>
 #include<string>
-#include <fstream>
+#include<fstream>
+#include<stdio.h>
 
 const char ALIVE = 'x';
 const char DEAD = '.';

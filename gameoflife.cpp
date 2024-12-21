@@ -26,9 +26,22 @@ std::vector<std::vector<char>> readBoardInputFile(const std::string filename) {
     return board;
 }
 
-void writeBoardOutputFile(const Board &board, const std::string filename) {
+void writeBoardOutputFile(const Board &board, const std::string outputFilename) {
 
-    // Write board state to file
+    std::ofstream outputFile(outputFilename);
+    int rows = board.board.size();
+    int columns = board.board[0].size();
+
+    outputFile << rows << "," << columns << std::endl;
+
+    for (const auto& row : board.board) {
+        for (const char cell : row) {
+            outputFile << cell;
+        }
+        outputFile << std::endl;
+    }
+
+    outputFile.close();
 
 }
 
