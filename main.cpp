@@ -1,4 +1,7 @@
 #include "gameoflife.h"
+#include "Timing.h"
+
+#include<iostream>
 
 struct Config {
     std::string inputFile;
@@ -26,20 +29,33 @@ Config parseArguments(const int argc, const char* argv[]) {
 
 int main(int argc, char* argv[]) {
 
+    Timing *timing = Timing::getInstance();
+    timing->startSetup();
+
     Config config = parseArguments(argc, argv);
 
     std::vector<std::vector<char>> inputBoard = readBoardInputFile(config.inputFile);
 
     Board previousBoard(inputBoard);
-
     Board nextBoard(inputBoard);
+
+    timing->stopSetup();
+    timing->startComputation();
 
     for (int i = 0; i < config.generations; ++i) {
         calculateNextBoard(previousBoard, nextBoard);
         std::swap(previousBoard, nextBoard);
     }
 
+    timing->stopComputation();
+    timing->startFinalization();
+
     writeBoardOutputFile(previousBoard, config.outputFile);
+
+    timing->stopFinalization();
+
+    if (config.measure)
+        std::cout << timing->getResults() << std::endl;
 
     return 0;
 }
