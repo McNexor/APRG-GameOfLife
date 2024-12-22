@@ -27,18 +27,6 @@ Config parseArguments(int argc, char* argv[]) {
     return config;
 }
 
-void printBoard(Board &board) {
-    std::cout << board.board.size() << "," << board.board[0].size() << std::endl;
-
-    for (const auto& row : board.board) {
-        for (const char cell : row) {
-            std::cout << cell;
-        }
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-}
-
 int main(int argc, char* argv[]) {
 
     Timing *timing = Timing::getInstance();
@@ -58,6 +46,7 @@ int main(int argc, char* argv[]) {
         calculateNextBoard(previousBoard, nextBoard);
         //printBoard(nextBoard);
         previousBoard.board = nextBoard.board;
+        
     }
 
     timing->stopComputation();

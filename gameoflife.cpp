@@ -6,19 +6,19 @@ Board::Board() {
 
 std::vector<std::vector<char>> readBoardInputFile(const std::string filename) {
 
-    int rows = 0;
-    int columns = 0;
+    int rowLength = 0;
+    int columnLength = 0;
     std::ifstream inputFile(filename);
     std::string line;
 
     std::getline(inputFile, line);
-    sscanf(line.c_str(), "%d,%d", &rows, &columns);
+    sscanf(line.c_str(), "%d,%d", &rowLength, &columnLength);
 
-    std::vector<std::vector<char>> board = std::vector<std::vector<char>>(rows, std::vector<char>(columns, DEAD));
+    auto board = std::vector<std::vector<char>>(columnLength, std::vector<char>(rowLength, DEAD));
 
-    for (int i = 0; i < rows; ++i) {
+    for (int i = 0; i < columnLength; ++i) {
         std::getline(inputFile, line);
-        for (int j = 0; j < columns; ++j) {
+        for (int j = 0; j < rowLength; ++j) {
             board[i][j] = line[j];
         }
     }
@@ -29,8 +29,8 @@ std::vector<std::vector<char>> readBoardInputFile(const std::string filename) {
 void writeBoardOutputFile(const Board &board, const std::string outputFilename) {
 
     std::ofstream outputFile(outputFilename);
-    int rows = board.board.size();
-    int columns = board.board[0].size();
+    int rows = board.board[0].size();
+    int columns = board.board.size();
 
     outputFile << rows << "," << columns << std::endl;
 
@@ -76,8 +76,6 @@ void updateCell(Board &board, const int aliveCount, const size_t row, const size
 void calculateNextBoard(const Board &previousBoard, Board &nextBoard) {
     size_t rows = previousBoard.board.size();
     size_t columns = previousBoard.board[0].size();
-
-    //nextBoard.board = std::vector<std::vector<char>>(rows, std::vector<char>(columns, DEAD));
 
     for (size_t row = 0; row < rows; ++row) {
         for (size_t col = 0; col < columns; ++col) {
