@@ -84,3 +84,30 @@ void calculateNextBoard(const Board &previousBoard, Board &nextBoard) {
         }
     }
 }
+
+void calculateNextBoardParallel(const Board &previousBoard, Board &nextBoard) {
+    size_t rows = previousBoard.board.size();
+    size_t columns = previousBoard.board[0].size();
+
+    #pragma omp parallel for shared(rows, columns, previousBoard, nextBoard)
+    for (size_t row = 0; row < rows; ++row) {
+        for (size_t col = 0; col < columns; ++col) {
+
+            int aliveCount = 0;
+
+            for (int i = 0; i < 8; ++i) {
+                int nextRow = (row + DROW[i] + rows) % rows;
+                int nextCol = (col + DCOL[i] + columns) % columns;
+                if (previousBoard.board[nextRow][nextCol] == ALIVE) {
+                    ++aliveCount;
+                }
+            }
+
+            if (aliveCount == 3 || (previousBoard.board[row][col] == ALIVE && aliveCount == 2)) 
+                nextBoard.board[row][col] = ALIVE;
+            else {
+                nextBoard.board[row][col] = DEAD;
+            }
+        }
+    }
+}

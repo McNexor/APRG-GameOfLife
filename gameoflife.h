@@ -26,3 +26,5 @@ int countAliveNeighbors(const Board &board, size_t row, size_t column);
 void updateCell(Board &board, size_t row, size_t column);
 
 void calculateNextBoard(const Board &previousBoard, Board &nextBoard);
+
+void calculateNextBoardParallel(const Board &previousBoard, Board &nextBoard);
