@@ -44,9 +44,7 @@ int main(int argc, char* argv[]) {
 
     for (int i = 0; i < config.generations; ++i) {
         calculateNextBoard(previousBoard, nextBoard);
-        //printBoard(nextBoard);
         previousBoard.board = nextBoard.board;
-        
     }
 
     timing->stopComputation();
