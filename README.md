@@ -7,6 +7,7 @@ This project implements Conway's Game of Life in C++ for the Course Advanced Pro
 - **Configurable Input:** Reads the initial game board from a file.
 - **Generations Simulation:** Simulates multiple generations based on Conway's rules.
 - **Wrap-Around Logic:** The grid is treated as a toroidal surface (edges wrap around).
+- **Parallel Mode:** The simulation can also be computed in parallel.
 - **Performance Measurement:** Measures setup, computation, and finalization times using the `Timing` utility.
 
 ## Prerequisites
@@ -25,21 +26,28 @@ This project implements Conway's Game of Life in C++ for the Course Advanced Pro
 1. Clone or download the repository.
 2. Compile the program using a C++ compiler:
    ```bash
-   g++ -std=c++17 -o gol gol.cpp gameoflife.cpp Timing.cpp
+   g++ -std=c++17 -fopenmp -o gol gol.cpp gameoflife.cpp Timing.cpp
    ```
 
 ## Usage
 
 Run the program with the following command:
 ```bash
-./gol --load <input_file> --save <output_file> --generations <n> [--measure]
+./gol --mode seq --load <input_file> --save <output_file> --generations <n> [--measure]
+```
+OR
+```bash
+./gol --mode omp --threads <m> --load <input_file> --save <output_file> --generations <n> [--measure]
 ```
 
 ### Parameters:
 - `--load <input_file>`: Specifies the input file containing the initial board configuration.
 - `--save <output_file>`: Specifies the file to save the final board configuration.
 - `--generations <n>`: Specifies the number of generations to simulate.
+- `--mode`: Specifies the mode for computing the generations, `seq` for sequential, `omp` for parallel
+- `--threads`: Specifies the number of threads to use for parallel computation
 - `--measure` (optional): Prints timing details for setup, computation, and finalization.
+
 
 ### Example Input File Format
 ```
@@ -53,7 +61,7 @@ Run the program with the following command:
 
 ### Example Command
 ```bash
-./gol --load input.txt --save output.txt --generations 10 --measure
+./gol --mode seq --load input.txt --save output.txt --generations 10 --measure
 ```
 
 ## Example Output
